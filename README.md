@@ -1,10 +1,18 @@
 # homebrew-ghostconductor
 
-Homebrew tap for Ghost Conductor.
+Homebrew tap for GhostConductor.
 
 ## Install
 
+```bash
+brew tap GhostConductor/ghostconductor
+brew install --cask ghostconductor
+ghostconductor
 ```
-brew tap ghostconductor/ghostconductor
-brew install ghostconductor
+
+## Uninstall
+
+```bash
+brew uninstall --cask ghostconductor
+brew untap GhostConductor/ghostconductor
 ```
