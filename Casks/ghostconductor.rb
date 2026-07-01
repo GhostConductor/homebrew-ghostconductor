@@ -15,6 +15,7 @@ cask "ghostconductor" do
   homepage "https://ghostconductor.io"
   binary "ghostconductor"
   postflight do
+    system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ghostconductor"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/jobs"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/repos"]
