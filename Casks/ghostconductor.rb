@@ -16,10 +16,12 @@ cask "ghostconductor" do
   binary "ghostconductor"
   postflight do
     system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ghostconductor"]
-    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/prompts/intent"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/context"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/jobs"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/repos"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/shared"]
+    system_command "/usr/bin/touch", args: ["#{Dir.home}/ghostconductor/etc/CONTEXT.md"]
   end
   uninstall_postflight do
     system_command "/bin/rm", args: ["-rf", "#{Dir.home}/ghostconductor"]
