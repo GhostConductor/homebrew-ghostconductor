@@ -4,18 +4,18 @@ cask "ghostconductor" do
 
   on_macos do
     on_intel do
-      sha256 "cb99d0c78666cd56fbb829711d9dcf623f7acb05c5785d5d12e3f7b46dc95ba1"
+      sha256 "e386186d88e9099588e1e7ad9850daa8cd28cdf01e90d7c9170c30a767de1f37"
       url "https://github.com/GhostConductor/ghostconductor/releases/download/v#{version}/ghostconductor-darwin-amd64.tar.gz"
     end
     on_arm do
-      sha256 "738fc5b05b16c753155189b906d925a5a4638d3543df86b25ac56a33dc8cbead"
+      sha256 "be9ef8ebf5284db4d314d4948e32ab47e2ade3c1c8a65b6332a1fe099fc622d8"
       url "https://github.com/GhostConductor/ghostconductor/releases/download/v#{version}/ghostconductor-darwin-arm64.tar.gz"
     end
   end
 
   on_linux do
     on_intel do
-      sha256 "81a0d661877480941e6267511fd00cedc2229a03f21e11d13d987c33e1cfe56d"
+      sha256 "06456f7954a5f8dfb30a679c64a3d3e646f20eaf963d254cae964ccb2fa8d651"
       url "https://github.com/GhostConductor/ghostconductor/releases/download/v#{version}/ghostconductor-linux-amd64.tar.gz"
     end
   end
@@ -33,21 +33,20 @@ cask "ghostconductor" do
   postflight do
     system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/ghostconductor"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/prompts/intent"]
-    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/context"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/prompts/context"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/prompts/chat"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/prompts/memory"]
+    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/matrix/maps"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/jobs"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/repos"]
     system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/shared"]
     system_command "/usr/bin/curl", args: ["-sL", "-o", "/tmp/prompts.tar.gz", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/prompts.tar.gz"]
-    system_command "/usr/bin/curl", args: ["-sL", "-o", "/tmp/context.tar.gz", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/context.tar.gz"]
+    system_command "/usr/bin/curl", args: ["-sL", "-o", "/tmp/matrix.tar.gz", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/matrix.tar.gz"]
     system_command "/usr/bin/tar", args: ["-xzf", "/tmp/prompts.tar.gz", "-C", "#{Dir.home}/ghostconductor/etc"]
-    system_command "/usr/bin/tar", args: ["-xzf", "/tmp/context.tar.gz", "-C", "#{Dir.home}/ghostconductor/etc"]
-    system_command "/usr/bin/touch", args: ["#{Dir.home}/ghostconductor/etc/CONTEXT.md"]
+    system_command "/usr/bin/tar", args: ["-xzf", "/tmp/matrix.tar.gz", "-C", "#{Dir.home}/ghostconductor/etc"]
     system_command "/usr/bin/curl", args: ["-sL", "-o", "#{Dir.home}/ghostconductor/etc/network-policy.json", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/network-policy.json"]
     system_command "/usr/bin/curl", args: ["-sL", "-o", "#{Dir.home}/ghostconductor/etc/container-policy.json", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/container-policy.json"]
-    system_command "/bin/mkdir", args: ["-p", "#{Dir.home}/ghostconductor/etc/matrix/maps"]
-    system_command "/usr/bin/curl", args: ["-sL", "-o", "/tmp/matrix.tar.gz", "https://github.com/GhostConductor/ghostconductor/releases/latest/download/matrix.tar.gz"]
-    system_command "/usr/bin/tar", args: ["-xzf", "/tmp/matrix.tar.gz", "-C", "#{Dir.home}/ghostconductor/etc"]
-    system_command "/bin/rm", args: ["-f", "/tmp/prompts.tar.gz", "/tmp/context.tar.gz", "/tmp/matrix.tar.gz"]
+    system_command "/bin/rm", args: ["-f", "/tmp/prompts.tar.gz", "/tmp/matrix.tar.gz"]
   end
 
   uninstall_postflight do
